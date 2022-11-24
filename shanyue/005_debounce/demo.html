@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.js"></script>
+    <script src='./debounce.js'></script>
+    <script src='./throttle.js'></script>
+
+    <style>
+        /* #box{
+            width: 200px;
+            height: 300px;
+            background:red;
+        } */
+    </style>
+</head>
+<body>
+    <div id="app">debounce点击事件</div>
+    <div id="box" >box</div>
+    <script>
+       window.onload=()=>{ 
+        let el=document.getElementById('app')
+        let boxel=document.getElementById('box')    
+        el.addEventListener('click',        
+            debounce(function(){           
+                console.log('abc')
+            },2000)
+        ) 
+        boxel.onmousemove=
+
+            throttle(function(){
+             console.log('aa')
+            },1000)
+        }
+    
+    
+    </script>
+    
+</body>
+</html>

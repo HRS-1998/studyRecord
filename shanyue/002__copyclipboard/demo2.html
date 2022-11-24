@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>获取剪切板内容</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    <script>
+// 是否能够有读取剪贴板的权限
+// result.state == "granted" || result.state == "prompt"
+const result = navigator.permissions.query({ name: "clipboard-read" });
+
+// 获取剪贴板内容
+const text = navigator.clipboard.readText();
+console.log(text)
+    </script>
+</body>
+</html>
