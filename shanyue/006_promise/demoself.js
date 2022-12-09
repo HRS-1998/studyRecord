@@ -1,132 +1,193 @@
-//测试promise
-// let p1=new Promise((resolve,reject)=>{
-//     resolve('success01')
-//     reject('fail01')
+/*                                             * 手写实现promise源码*                                            */
+
+// // a.一道promise的非常规题
+// Promise.resolve().then(() => {
+//     console.log(0);
+//     return Promise.resolve(4);
+// }).then((res) => {
+//     console.log(res)
 // })
 
-// let p2=new Promise((resolve,reject)=>{
-//     reject('fail02')
-//     resolve('success02')
+// Promise.resolve().then(() => {
+//     console.log(1);
+// }).then(() => {
+//     console.log(2);
+// }).then(() => {
+//     console.log(3);
+// }).then(() => {
+//     console.log(5);
+// }).then(() => {
+//     console.log(6);
 // })
 
-// let p3=new Promise((resolve,reject)=>{
-//     throw('Error')
-// })
+// 大家先思考一下
+// 0， undefined 4 
+// 1,2,3,4,5,6,
 
-// console.log(p1,'p1')
-// console.log(p2,'p2')
-// console.log(p3,'p3')
-
-
-//1.实现resolve和reject
+//定义一个类，用来实现promise
+const PENDING = 'pending'
+const FULFILLED = 'fulfilled'
+const REJECTED = 'reject'
 class MyPromise {
     constructor(executor) {
-        this.initValue()
-        this.initBind()
+        //错误捕获
         try {
             executor(this.resolve, this.reject)
-        } catch (e) {
-            this.reject(e)
+        } catch (err) {
+            this.reject(err)
         }
-    }
-    initBind() {
-        //初始化this
-        this.resolve = this.resolve.bind(this)
-        this.reject = this.reject.bind(this)
-    }
-    initValue() {
-        this.PromiseResult = null
-        this.PromiseState = 'PENDING'
-        this.onFulfilledCallbacks = []
-        this.onRejectedCallbacks = []
 
     }
-    resolve(value) {
-        if (this.PromiseState !== "PENDING") return
-        this.PromiseState = 'FULFILLED'
-        this.PromiseResult = value
-        if (this.onFulfilledCallbacks.length) {
-            this.onFulfilledCallbacks.shift()(this.PromiseResult)
+    status = PENDING;
+    value = null;
+    reason = null;
+    //存储成功和失败的回调
+    onFulfilledCallBack = [];
+    onRejectedCallBack = [];
+    //更改成功后的状态
+    resolve = (value) => {
+        if (this.status == PENDING) {
+            this.status = FULFILLED
+            this.value = value
+            while (this.onFulfilledCallBack.length) {
+                this.onFulfilledCallBack.shift()(value)
+            }
         }
     }
-    reject(reason) {
-        if (this.PromiseState !== "PENDING") return
-
-        this.PromiseState = "REJECTED"
-        this.PromiseResult = reason
-        if (this.onRejectedCallbacks.length) {
-            this.onRejectedCallbacks.shift()(this.PromiseResult)
+    //更改拒绝后的状态
+    reject = (reason) => {
+        if (this.status == PENDING) {
+            this.status = REJECTED
+            this.reason = reason
+            while (this.onRejectedCallBack.length) {
+                this.onRejectedCallBack.shift()(reason)
+            }
         }
+
     }
     then(onFulfilled, onRejected) {
-        onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : val => val
-        onRejected = typeof onRejected === 'function' ? onRejected : reason => { throw reason }
-        var thenPromise=new MyPromise((resolve,reject)=>{
-            const resolvePromise=cb=>{
-                try{
-                    const x=cb(this.PromiseResult)
-                    if(x===thenPromise)  throw new Error('不能返回自身')
-                    if(x instanceof MyPromise){ 
-                        x.then(resolve,reject)
-                    }else{
-                        resolve(x)
+        const realOnFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value
+        const realOnRejected = typeof onRejected === 'function' ? onRejected : reason => { throw reason }
+        const promise2 = new MyPromise((resolve, reject) => {
+            const fulfilledMicrotask = () => {
+                queueMicrotask(() => {
+                    try {
+                        const x = realOnFulfilled(this.value)
+                        resolvePromise(promise2, x, resolve, reject)
+
+                    } catch (err) {
+                        reject(err)
                     }
-                }catch(err){
-                    reject(err)
-                    throw new Error(err)
-                }
+                })
             }
-            if (this.PromiseState === 'FULFILLED')  resolvePromise(onFulfilled)
-            if (this.PromiseState === 'REJECTED')  resolvePromise(onRejected)
-            if (this.PromiseState === "PENDING") {
-                this.onFulfilledCallbacks.push(resolvePromise.bind(this,onFulfilled))
-                this.onRejectedCallbacks.push(resolvePromise.bind(this,onRejected))
+
+            const rejectedMicrotask = () => {
+                queueMicrotask(() => {
+                    try {
+                        const x = realOnRejected(this.reason)
+                        resolvePromise(promise2, x, resolve, reject)
+
+                    } catch (error) {
+                        reject(error)
+                    }
+                })
             }
-        }) 
-        return thenPromise
-        // if (this.PromiseState === 'FULFILLED')  onFulfilled(this.PromiseResult)
-        // if (this.PromiseState === 'REJECTED')  onRejected(this.PromiseResult)
-        // if (this.PromiseState === "PENDING") {
-        //     this.onFulfilledCallbacks.push(onFulfilled.bind(this))
-        //     this.onRejectedCallbacks.push(onRejected.bind(this))
-        // }
-        
-      
+            if (this.status === FULFILLED) {
+                fulfilledMicrotask()
+
+
+            } else if (this.status === REJECTED) {
+                rejectedMicrotask()
+
+            } else if (this.status === PENDING) {
+                //这是pending状态
+                this.onFulfilledCallBack.push(fulfilledMicrotask)
+                this.onRejectedCallBack.push(rejectedMicrotask)
+            }
+
+        })
+        return promise2
+    }
+    //添加静态方法
+    static resolve(parameter) {
+        if (parameter instanceof MyPromise) return parameter
+        return new MyPromise(resolve => {
+            resolve(parameter)
+        })
+    }
+    static reject(reason) {
+        return new MyPromise((resolve, reject) => {
+            reject(reason)
+        })
+
     }
 }
-// let test1=new MyPromise((resolve,reject)=>{
-//     resolve('成功')
-// })
-// let test2=new MyPromise((resolve,reject)=>{
-//     reject('失败')
-// })
-// let test3=new MyPromise((resolve,reject)=>{
-//     throw('抛出异常')
-// })
-// let test4= new MyPromise((resolve,reject)=>{
-//  resolve('测试4')
-// }).then(res=>{
-//    console.log(res,'测试4');
-
-// })
-// let test5 = new MyPromise((resolve, reject) => {
-//     setTimeout(() => {
-//         resolve('测试5延迟调用')
-//     }, 5000)
-// }).then(res => {
-//     console.log(res, '测试5延迟调用');
-
-// })
-
-let test6= new MyPromise((resolve,reject)=>{
-
- resolve('测试6')
-}).then((res,err)=>{
-   console.log(res,'测试6');
-
-})
-// console.log(test1,'test1')
-// console.log(test2,'test2')
-// console.log(test3,'test3')
-
+function resolvePromise(promise, x, resolve, reject) {
+    // 如果相等了，说明return的是自己，抛出类型错误并返回
+    if (promise === x) {
+      return reject(new TypeError('The promise and the return value are the same'));
+    }
+  
+    if (typeof x === 'object' || typeof x === 'function') {
+      // x 为 null 直接返回，走后面的逻辑会报错
+      if (x === null) {
+        return resolve(x);
+      }
+  
+      let then;
+      try {
+        // 把 x.then 赋值给 then 
+        then = x.then;
+      } catch (error) {
+        // 如果取 x.then 的值时抛出错误 error ，则以 error 为据因拒绝 promise
+        return reject(error);
+      }
+  
+      // 如果 then 是函数
+      if (typeof then === 'function') {
+        let called = false;
+        try {
+          then.call(
+            x, // this 指向 x
+            // 如果 resolvePromise 以值 y 为参数被调用，则运行 [[Resolve]](promise, y)
+            y => {
+              // 如果 resolvePromise 和 rejectPromise 均被调用，
+              // 或者被同一参数调用了多次，则优先采用首次调用并忽略剩下的调用
+              // 实现这条需要前面加一个变量 called
+              if (called) return;
+              called = true;
+              resolvePromise(promise, y, resolve, reject);
+            },
+            // 如果 rejectPromise 以据因 r 为参数被调用，则以据因 r 拒绝 promise
+            r => {
+              if (called) return;
+              called = true;
+              reject(r);
+            });
+        } catch (error) {
+          // 如果调用 then 方法抛出了异常 error：
+          // 如果 resolvePromise 或 rejectPromise 已经被调用，直接返回
+          if (called) return;
+  
+          // 否则以 error 为据因拒绝 promise
+          reject(error);
+        }
+      } else {
+        // 如果 then 不是函数，以 x 为参数执行 promise
+        resolve(x);
+      }
+    } else {
+      // 如果 x 不为对象或者函数，以 x 为参数执行 promise
+      resolve(x);
+    }
+  }
+MyPromise.deferred = function () {
+    var result = {};
+    result.promise = new MyPromise(function (resolve, reject) {
+        result.resolve =resolve
+        result.reject =reject
+    })
+    return result
+}
+module.exports = MyPromise
 

@@ -128,6 +128,7 @@ class MyPromise {
    * all 方法返回的还是一个promise类型的对象
    */
   static all (array) {
+    
     let result = []
     let index = 0
     return new MyPromise((resolve, reject) => {
@@ -175,3 +176,6 @@ function resolvePromise (resultPromise, result, resolve, reject) {
     resolve(x)
   }
 }
+let promise=new MyPromise((resolve,reject)=>{
+  resolve(10)
+})

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <!-- <script type="module" >
+          import {throttle,debounce} from './index.js'
+        </script> -->
+        <!-- <script type="module" src="./idex.js"></script> -->
+        <style>
+            *{
+                padding: 0;
+                margin: 0;
+            }
+            .contain{
+                height: 500px;
+                width: 500px;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin: auto;
+               
+
+            }
+           #box1{
+             height: 200px;
+             width: 500px;
+             /* margin: auto; */
+             background-color: burlywood;
+             display: table-cell;
+             vertical-align: middle;
+             text-align: center;
+
+            }
+            #box2{
+              height: 300px;
+              width: 500px;
+                /* margin:auto; */
+              background-color:red ;
+              display: table-cell;
+              vertical-align: middle;
+              text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="module" >
+          import {throttle,debounce} from './index.js'
+             window.onload=function(){ 
+                              let el_1=document.getElementById('box1');
+                              let el_2=document.getElementById('box2');
+                              el_1.addEventListener('click',debounce(function(){
+                                                 console.log(2)
+                              el_2.onmousemove=throttle(function(){
+                                console.log(3)
+                              },1000)
+                    },2000))
+                    }
+    </script>
+        <div class="contain">
+            <div id="box1"><div style="display:inline-block;width: 100px;height:
+                    100px;">点击我一下是个防抖函数</div></div>
+            <div id="box2">鼠标移动节流</div>
+        </div>
+
+
+
+    </body>
+</html>
