@@ -1,5 +1,5 @@
 /* new的过程：
-1.新定义一个json对象
+1.新定义一个对象
 2.对象继承构造函数的原型链
 3.将构造函数的this指向这个对象
 4.根据构造函数的返回值类型返回结果
@@ -11,6 +11,7 @@
 function myNew(fn){
     let obj = {}
     obj=Object.create(fn.prototype)
+    //这里或者obj._proto_=fn.prototype
     let args=Array.prototype.slice.call(arguments,1)
     let result=fn.call(obj,...args)
     console.log(result,'qqqq',obj,)

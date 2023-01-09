@@ -1,0 +1,117 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="box"></div>
+        <script>
+        var path = '../image/project-list.png'
+        function clipImage(path){
+             const canvas = document.createElement('canvas')
+             canvas.width = 100
+             canvas.height = 100
+             const ctx = canvas.getContext('2d')
+             const img = document.createElement('img')
+             img.src = path
+             img.setAttribute("crossOrigin",'Anonymous')
+             img.onload = function (){
+             ctx.drawImage(img,0,0,100,100)
+             let tag=document.getElementsByClassName('box')
+             tag[0].appendChild(canvas)
+             console.log(canvas.toDataURL())
+            }
+        }
+        clipImage(path)
+    </script>
+    </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Canvas</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <h3>目标</h3>
+            <span>将图片中的最中间头像剪裁出来</span>
+
+            <h3>原始图预览</h3>
+            <img id="image" alt=""
+               >
+
+            <h3>Canvas裁切视图</h3>
+            <canvas id="canvas-cut"></canvas>
+
+            <h3>Base64结果展示</h3>
+            <img id="result" />
+        </div>
+        <script>
+			
+			const SRC= "../image/clip.jpg";
+			document.getElementById('image').src = SRC;
+			var canvas = document.getElementById('canvas-cut');
+            canvas.height='200';
+            canvas.width='136';
+			var cut = canvas.getContext('2d');
+			var img = new Image();
+			img.src = SRC;
+            // img.setAttribute('style','width:300px;height:200px')	
+            img.style='width:300px;height:200px'		
+			//处理toDataURL遇跨域资源导致的报错
+			img.crossOrigin = 'Anonymous';
+			img.onload = function() {
+				cut.drawImage(img,184,55,136,200,0 ,0,136,200);
+				var imgbase64 = canvas.toDataURL("image/jpg");
+				document.getElementById('result').src =imgbase64;
+			};
+			
+		</script>
+    </body>
+</html>
+
+<!-- <html>
+<head>
+  <meta charset="utf-8">
+  <title>通过filereader接口读取文件</title>
+  <script type="text/javascript">
+    function getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+
+        let style= img.getAttribute('style');;      
+        canvas.width = '300';
+        canvas.height = '200';
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, 300, 200);
+        var dataURL = canvas.toDataURL("image/png");
+        return dataURL
+        // return dataURL.replace("data:image/png;base64,", "");
+    }
+
+    function main() {
+        var img = document.createElement('img');
+        img.src = '../image/clip.jpg';  //此处自己替换本地图片的地址
+        img.setAttribute('style','height:200px;width:300px')
+        img.crossOrigin= 'anonymous'
+        img.onload =function() {
+            var data = getBase64Image(img);
+            var img1 = document.createElement('img');
+            img1.src = data;
+            document.body.appendChild(img1);
+            console.log(data);
+        }
+    }
+    main()
+</script>
+</head>
+
+<body>
+</body>
+
+</html> -->

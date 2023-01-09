@@ -15,7 +15,6 @@ Function.prototype.mybind = function (target) {
   //这里添加一个判断，判断当前是否返回是否存在new关键字
   let fn = function () { }
   //返回
-
   let bound=function(){
     console.log('aa',this)
     let bindargs=Array.prototype.slice.call(arguments)

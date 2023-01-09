@@ -4,11 +4,12 @@
 function debounce(fn,delay){
     let timer
     let args=arguments
+    let self=this
     return function(){
 
     if(timer) clearTimeout(timer)
         timer=setTimeout(()=>{ 
-        fn.call(args)
+        fn.apply(self,args)
         },delay)
     }
    
