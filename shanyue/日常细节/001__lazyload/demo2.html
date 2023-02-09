@@ -35,11 +35,12 @@
 </body>
 <script>
     const demo = document.querySelectorAll('img')
-
     function lazy() {
         for (let elem of demo) {
             //关于getBoundingClientRect()函数     https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect
-            if (elem.getBoundingClientRect().top < document.documentElement.clientHeight - 200) {
+            debugger
+            console.log(elem.getBoundingClientRect().top,'----',document.documentElement.clientHeight)
+            if (elem.getBoundingClientRect().top < document.documentElement.clientHeight -200) {
                 if (elem.dataset.src && elem.src == '') {
                     elem.src = elem.dataset.src
                 }

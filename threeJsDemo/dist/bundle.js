@@ -1,0 +1,1 @@
+document.getElementById("root").innerHTML="这是一个three内容",console.log("111");
