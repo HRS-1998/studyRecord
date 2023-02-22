@@ -1,10 +1,10 @@
 
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 /*react生命周期
 1.constructor()
 在react挂载前调用，仅用于以下两种情况
 a.来初始化函数内部state;
-b.为事件处理函数绑定实例
+b.为事件处理函数绑定实例;
 
 2.static getDerivedStateFromProps(nextProps,state)   ---这是一个静态函数
 其中：nextProps代表即将更新的props值，state代表上一个状态的state;
@@ -255,14 +255,67 @@ useEffect(()=>{
 * 12 useMemo
     const cacheSomething = useMemo(create,deps)
     create：第一个参数为一个函数，函数的返回值作为缓存值，
-    deps： 第二个参数为一个数组，存放当前 useMemo 的依赖项，在函数组件下一次执行的时候，会对比 deps 依赖项里面的状态，是否有改变，如果有改变重新执行 create ，得到新的缓存值。
-    cacheSomething：返回值，执行 create 的返回值。如果 deps 中有依赖项改变，返回的重新执行 create 产生的值，否则取上一次缓存值。
+    deps： 第二个参数为一个数组，存放当前 useMemo 的依赖项，在函数组件下一次执行的时候，会对比 deps 依赖项里面的状态，是否有改变，
+    如果有改变重新执行 create ，得到新的缓存值。cacheSomething：返回值，执行 create 的返回值。如果 deps 中有依赖项改变，
+    返回的重新执行 create 产生的值，否则取上一次缓存值。
 
 
 * 13 useCallback
+    useMemo 和 useCallback 接收的参数都是一样，都是在其依赖项发生变化后才执行，都是返回缓存的值，
+    区别在于 useMemo 返回的是函数运行的结果，useCallback 返回的是函数，
+    这个回调函数是经过处理后的也就是说父组件传递一个函数给子组件的时候，
+    由于是无状态组件每一次都会重新生成新的 props 函数，这样就使得每一次传递给子组件的函数都发生了变化，
+    这时候就会触发子组件的更新，这些更新是没有必要的，此时我们就可以通过 usecallback 来处理此函数，然后作为 props 传递给子组件。
 
--------------------hooks之工具hooks---------------------------  
+
 * 14 useDebugValue
+    //用react.memo 
+    const DemoChildren = React.memo((props)=>{
+      //只有初始化的时候打印了 子组件更新 
+       console.log('子组件更新')
+      useEffect(()=>{
+          props.getInfo('子组件')
+      },[])
+      return <div>子组件</div>
+    })
+    
+    const DemoUseCallback=({ id })=>{
+       const [number, setNumber] = useState(1)
+       // 此时usecallback的第一参数 (sonName)=>{ console.log(sonName) }
+        经过处理赋值给 getInfo 
+       const getInfo  = useCallback((sonName)=>{
+             console.log(sonName)
+       },[id])
+       return <div>
+           {// 点击按钮触发父组件更新 ，但是子组件没有更新 }
+           <button onClick={ ()=>setNumber(number+1) } >增加</button>
+           <DemoChildren getInfo={getInfo} />
+       </div>
+    }
+   
+-------------------hooks之工具hooks---------------------------  
+    
+* 15 useDebugValue
+    我们不推荐你向每个自定义 Hook 添加 debug 值。当它作为共享库的一部分时才最有价值。在某些情况下，
+    格式化值的显示可能是一项开销很大的操作。除非需要检查 Hook，否则没有必要这么做。因此，
+    useDebugValue 接受一个格式化函数作为可选的第二个参数。该函数只有在 Hook 被检查时才会被调用。
+    它接受 debug 值作为参数，并且会返回一个格式化的显示值。
+    function useFriendStatus(friendID) {
+    const [isOnline, setIsOnline] = useState(null);
+    // ...
+    // 在开发者工具中的这个 Hook 旁边显示标签
+    // e.g. "FriendStatus: Online"
+    useDebugValue(isOnline ? 'Online' : 'Offline');
+    return isOnline;
+    }
+ 
 
-* 15 useld
+* 16 useld
+    useId 也是 React v18 产生的新的 hooks , 它可以在 client 和 server 生成唯一的 id , 
+    解决了在服务器渲染中，服务端和客户端产生 id 不一致的问题，
+    更重要的是保障了 React v18 中 streaming renderer （流式渲染） 中 id 的稳定性。
+    
+
+
  */
+console.log(Number(null))

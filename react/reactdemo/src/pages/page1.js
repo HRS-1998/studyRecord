@@ -10,7 +10,7 @@ function Home(){
             <Link to="/about">to about</Link>
         </nav>
        <h4>----------------------</h4>
-       <Skip></Skip>
+       <Skip>{1111111111111}</Skip>
        <h4>----------------------</h4>
        <DemoState></DemoState>
        <h4>----------------------</h4>
@@ -19,11 +19,13 @@ function Home(){
        <Index1></Index1>
        <h4>----------------------</h4>
        <Index></Index>
-       
+       <h5>----------------------</h5>
+       <DemoUseCallback></DemoUseCallback>
     </div>
 }
 function Skip(props){
     let navigate=useNavigate()
+    debugger
     const Onskip=(e)=>{   
        
             navigate(e)  
@@ -158,6 +160,32 @@ class Index1 extends React.Component{
         </div>
     }
 }
+
+//useCallback
+const DemoChildren = React.memo((props)=>{
+    /* 只有初始化的时候打印了 子组件更新 */
+     console.log('子组件更新')
+    React.useEffect(()=>{
+        props.getInfo('子组件')
+    },[props])
+    return <div>子组件</div>
+ })
+ 
+ const DemoUseCallback=({ id })=>{
+     const [number, setNumber] = React.useState(1)
+     /* 此时usecallback的第一参数 (sonName)=>{ console.log(sonName) }
+      经过处理赋值给 getInfo */
+     const getInfo  = React.useCallback((sonName)=>{
+           console.log(sonName)
+     },[id])
+     return <div>
+         {/* 点击按钮触发父组件更新 ，但是子组件没有更新 */}
+         <button onClick={ ()=>setNumber(number+1) } >增加</button>
+         <DemoChildren getInfo={getInfo} number={number}/>
+     </div>
+ }
+
+
 
 
 
