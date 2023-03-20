@@ -7,6 +7,10 @@
 2. 在webpack中的基本配置
 exports require的大致思路
 
+3. demo.js中webpack的循环引用问题：
+  在每次引用前初始化exports={}再执行内部函数，执行完如果模块有exports则有值
+
+
 const modules={
     './name.js':()=>{
       var module={}

@@ -3,7 +3,7 @@ const  object = {
    name:'从构建产物洞悉模块化原理',
    author:'不要秃头啊'
 }
-console.log('我是 b 文件')
+console.log('我是 b 文件',say)
 module.exports = function(){
     return object
 }
