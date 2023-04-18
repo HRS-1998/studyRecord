@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        body {
+            margin: 0px;
+            padding: 0px;
+            height: 5000px;
+        }
+        
+        img {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo">
+        <img data-src="https://cdn.pixabay.com/photo/2021/08/24/15/38/sand-6570980_960_720.jpg" alt="1" />
+        <img data-src="https://cdn.pixabay.com/photo/2013/02/21/19/06/drink-84533_960_720.jpg" alt="2" />
+        <img data-src="https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_960_720.jpg" alt="3" />
+        <img data-src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg" alt="4" />
+        <img data-src="https://cdn.pixabay.com/photo/2017/03/26/21/54/yoga-2176668_960_720.jpg" alt="5" />
+    </div>
+</body>
+<script>
+    const demo = document.querySelectorAll('img')
+    function lazy() {
+        for (let elem of demo) {
+            //关于getBoundingClientRect()函数     https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect
+            debugger
+            console.log(elem.getBoundingClientRect().top,'----',document.documentElement.clientHeight)
+            if (elem.getBoundingClientRect().top < document.documentElement.clientHeight -200) {
+                if (elem.dataset.src && elem.src == '') {
+                    elem.src = elem.dataset.src
+                }
+            }
+        }
+    }
+
+    function throttle(t, fn) {
+        let time
+            // clearTimeout(time)
+        return function() {
+            if (!time) {
+                time = setTimeout(() => {
+                    time = null
+                    fn()
+                }, t)
+            }
+        }
+    }
+    lazy()
+    window.addEventListener('scroll', throttle(500, lazy))
+</script>
+
+</html>

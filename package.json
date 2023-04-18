@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+
+    "antd": "^5.1.7",
+    "electron-compile": "^6.4.4",
+    "electron-squirrel-startup": "^1.0.0"
+  },
+  "main": "",
+  "devDependencies": {},
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+
+    "antd": "^5.1.7"
+
+  }
+}

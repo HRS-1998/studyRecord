@@ -1,0 +1,92 @@
+<html>
+
+<head>
+    <title>Cube</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 引入three.js -->
+    <script src="https://cdn.bootcss.com/three.js/92/three.js"></script>
+    <!-- <script src="./three.js"></script> -->
+    <!-- 引入 stats.js  -->
+    <script src="http://www.wjceo.com/lib/js/libs/stats.min.js"></script>
+    <!-- 引入相机插件 OrbitControls.js-->
+    <script src="./OrbitControls.js"></script>
+    <!-- 引入 glTF加载器，用于加载glTF格式的3D模型 -->
+    <script src="./gltfloader.js"></script>
+    <script>
+        // 1、创建场景
+        var scene = new THREE.Scene();
+
+
+        // 2、创建相机（透视投影相机）
+        var camera = new THREE.PerspectiveCamera(
+            50, // 相机视野
+            window.innerWidth / window.innerHeight, // 水平方向和竖直方向长度的比值
+            0.1, // 近端渲染距离
+            1000 // 远端渲染距离
+        );
+
+        // 2设置相机位置简写方式：
+        camera.position.set(5, 10, 10);
+        // 3、创建渲染器
+        var renderer = new THREE.WebGLRenderer();
+        // 3.1 设置渲染器的大小（长宽）（设置渲染器为全屏）
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        // 3.2 将渲染结果展示到页面上
+        document.body.appendChild(renderer.domElement);
+        // 实例化相机插件对象
+        var control = new THREE.OrbitControls(camera, renderer.domElement);
+
+        // 实例化 GLTFLoader 对象
+        var loader = new THREE.GLTFLoader();
+        //加载外部的gltf格式的模型，并在回调中将生成的模型对象添加到场景中
+        loader.load('./3D_gltf/scene.gltf', function (gltf) {
+            // 设置缩放大小
+            gltf.scene.scale.set(5, 5, 5);
+            scene.add(gltf.scene);
+        });
+
+        // 7、创建光源
+        var spotLight = new THREE.SpotLight(0xffffff);
+        // 7.1 设置光源位置
+        spotLight.position.set(0, 20, 20);
+        // 7.2 设置光源照射的强度，默认值为 1
+        spotLight.intensity = 5;
+        // 7.3 将光源添加到场景中
+        scene.add(spotLight);
+
+        // 10、实例化性能监视插件
+        var stats = new Stats();
+        // 10.1 把stats对象生成的dom，添加到页面中（这样就能在页面中看到性能监视器了）
+        document.body.appendChild(stats.dom);
+        // 9、创建动画循环渲染函数
+        function animate() {
+            // 9.1 循环调用函数
+            requestAnimationFrame(animate);
+
+            // 10.2 更新性能插件
+            stats.update();
+            // 更新相机插件
+            control.update();
+            // 3.3 结合场景和相机进行渲染，即用摄像机拍下此刻的场景
+            renderer.setClearColor('rgb(135,206,250)', 1.0);
+            renderer.render(scene, camera);
+        };
+        // 调用动画函数
+        animate();
+    </script>
+</body>
+
+</html>
