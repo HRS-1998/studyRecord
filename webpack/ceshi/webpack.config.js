@@ -1,6 +1,10 @@
 const path=require('path')
 
+<<<<<<< HEAD
 const {DemoPlugin,WebpackDonePlugin,WebpackRunPlugin} = require('./plugins/demo_plugin')
+=======
+const DemoPlugin = require('./plugins/demo_plugin')
+>>>>>>> origin/main
 
 module.exports={
     mode:'development',
@@ -12,5 +16,11 @@ module.exports={
         filename:'buddle.js',
         path:path.resolve(__dirname,"./dist")
     },
+<<<<<<< HEAD
     plugins:[new DemoPlugin(),new WebpackDonePlugin(),new WebpackRunPlugin()]
+=======
+    plugins:[new DemoPlugin(
+
+    )]
+>>>>>>> origin/main
 }

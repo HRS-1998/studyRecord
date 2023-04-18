@@ -1,5 +1,6 @@
 
 
+
 //校验函数
 
 // var isValid=function(s){
@@ -48,6 +49,4 @@ var isValid = function (s) {
 }
 
 isValid("((]]))")
-
-
 
