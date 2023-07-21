@@ -18,7 +18,6 @@ class DemoPlugin{
   }
 }
 
-<<<<<<< HEAD
 //自定义两个插件：  WebpackRunPlugin    WebpackDonePlugin
 class WebpackRunPlugin{
    apply(compiler){
@@ -41,6 +40,3 @@ module.exports={
    WebpackDonePlugin,
    WebpackRunPlugin
 }
-=======
-module.exports=DemoPlugin
->>>>>>> origin/main

@@ -79,7 +79,7 @@ Loader文件最后导出的函数就是Normal Loader
 Loader模块中导出函数上面的pitch属性函数就是pitch Loader
 其实我们在导出的 Loader 函数上还有一个可选属性：pitch。它的值也是一个函数，该函数就被称为 Pitching Loader
 
-在Loader运行过程中，如果发现loader上有pitch属性，会先执行pitch阶段，再执行normal阶段(见    <pitchLoader.png>)
+在Loader运行过程中，如果发现loader上有pitch属性，会先执行pitch阶段，再执行normal阶段(见    ![](./pitchLoader.png))
 
 
 
@@ -88,7 +88,7 @@ Loader模块中导出函数上面的pitch属性函数就是pitch Loader
 tapable;  ---- 自定义事件触发库   类似于vue,react执行的生命周期
 compiler; ---- 代表了完整的webpack生命周期
 compilation   -----代表了一次资源版本构建
-见图<compiler.png>
+见图 ![](./compiler.png)
 
  
 
