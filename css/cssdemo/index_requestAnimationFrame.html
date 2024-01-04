@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      let ref;
+      function test(timestamp) {
+        console.log(timestamp);
+        ref = requestAnimationFrame(test); //函数中再调用一遍下一帧，实现循环
+      }
+      ref = requestAnimationFrame(test);
+      setTimeout(() => {
+        window.cancelAnimationFrame(ref); //停止动画帧
+      }, 10000);
+    </script>
+  </body>
+</html>

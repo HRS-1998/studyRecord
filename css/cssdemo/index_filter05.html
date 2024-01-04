@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文字出场方式</title>
+    <style>
+      .box {
+        background-color: goldenrod;
+        position: absolute;
+        width: 500px;
+        height: 300px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+      p {
+        margin: 0;
+        height: 300px;
+        font-size: 50px;
+        color: white;
+        line-height: 300px;
+        animation: move 3s linear forwards;
+        filter: contrast(30px);
+        letter-spacing: -30px;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+      }
+      @keyframes move {
+        0% {
+          opacity: 0;
+          letter-spacing: -30px;
+          filter: blur(10px);
+        }
+        20% {
+          opacity: 1;
+          letter-spacing: -20px;
+        }
+        50% {
+          filter: blur(4px);
+        }
+        80% {
+          letter-spacing: 10px;
+        }
+        100% {
+          letter-spacing: 15px;
+          filter: blur(0px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <p>css 加油！</p>
+    </div>
+  </body>
+</html>

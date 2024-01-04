@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>加载动画融合效果</title>
+    <style>
+      .container {
+        position: absolute;
+        height: 600px;
+        width: 345px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: gold;
+        filter: contrast(30);
+        display: flex;
+      }
+      .circle {
+        position: absolute;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        background-color: aqua;
+        bottom: 20px;
+        filter: blur(10px);
+        animation: move 4s cubic-bezier(0.2, 0.79, 0.83, 0.96) infinite 0.5s
+          forwards;
+      }
+      .circle:nth-child(1) {
+        left: 50px;
+        animation-delay: 0.4s;
+      }
+      .circle:nth-child(2) {
+        left: 100px;
+        animation-delay: 1.1s;
+      }
+      .circle:nth-child(3) {
+        left: 150px;
+        animation-delay: 1.6s;
+      }
+      .circle:nth-child(4) {
+        left: 200px;
+        animation-delay: 2.6s;
+      }
+      .circle:nth-child(5) {
+        left: 250px;
+        animation-delay: 4s;
+      }
+      @keyframes move {
+        0% {
+          transform: translate(10px, -20px) scale(0.5);
+        }
+        25% {
+          transform: translate(35px, -40px) scale(0.8);
+        }
+        45% {
+          transform: translate(55px, -60px) scale(0.6);
+        }
+        65% {
+          transform: translate(55px, -100px) scale(0.8);
+        }
+        85% {
+          transform: translate(80px, -130px) scale(0.4);
+        }
+        100% {
+          transform: translate(80px, -180px) scale(0.2);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+  </body>
+</html>
