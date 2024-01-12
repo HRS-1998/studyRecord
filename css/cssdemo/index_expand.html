@@ -5,17 +5,30 @@
     <meta name="divport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-      .w-40vw {
-        width: 40vw;
+      .flex {
+        display: flex;
+      }
+      .min-h46 {
+        min-height: 46px;
+      }
+      .ml-6 {
+        margin-left: 6px;
+      }
+      .mt-8 {
+        margin-top: 8px;
+      }
+      .fs-14 {
+        font-size: 14px;
+      }
+      .c-666 {
+        color: #666;
       }
       .box1 > div {
-        width: max(240px, 30vw);
+        width: max(240px, 10vw);
       }
-
       /* 展开 */
       .wrapper {
         display: flex;
-
         width: calc(100% -250px);
         overflow: hidden;
       }
@@ -54,10 +67,6 @@
       .btn::before {
         content: "展开";
       }
-
-      .exp {
-        display: none;
-      }
       .expChecked {
         -webkit-line-clamp: 999;
         height: auto;
@@ -74,35 +83,35 @@
 
   <body>
     <div id="app">
-      <div v-if="list.process_info">
-        <div v-for="(item,index) in list.process_info">
+      <div v-if="process_info">
+        <div v-for="(item,index) in process_info">
           <div class="ml-6 mt-8 min-h46">
             <div class="flex">
               <div class="box1">
                 <div>
-                  <text class="fs-14">{{item.type}}：</text>
-                  <text class="c-666 fs-14">{{item.user_name}}</text>
+                  <span class="fs-14">{{item.type}}：</span>
+                  <span class="c-666 fs-14">{{item.user_name}}</span>
                 </div>
-                <div class="mt-4">
-                  <text class="fs-14"
-                    >{{item.type=='责任人'?'处理时间':'时间'}}：</text
+                <div>
+                  <span class="fs-14"
+                    >{{item.type=='责任人'?'处理时间':'时间'}}：</span
                   >
-                  <text class="c-666 fs-14">{{item.finished_time}}</text>
+                  <span class="c-666 fs-14">{{item.finished_time}}</span>
                 </div>
               </div>
               <div class="wrapper">
-                <div v-if="item.annotation">
-                  <div class="text" :class="item.isOpen?'expChecked':''">
-                    <div bindtap="openHandle" data-index="index">
-                      <label
-                        class="btn"
-                        :class="item.isOpen?'expCheckedBtn':''"
-                        :for="'exp_'+index"
-                      ></label>
-                    </div>
-                    <text>批注：</text>
-                    <text class="c-666">{{item.annotation}}</text>
-                  </div>
+                <div
+                  v-if="item.annotation"
+                  class="text"
+                  :class="item.isOpen?'expChecked':''"
+                >
+                  <div
+                    @click="openHandle(index)"
+                    class="btn"
+                    :class="item.isOpen?'expCheckedBtn':''"
+                  ></div>
+                  <span>批注：</span>
+                  <span class="c-666">{{item.annotation}}</span>
                 </div>
               </div>
             </div>
@@ -114,30 +123,40 @@
       var app5 = new Vue({
         el: "#app",
         data: {
-          list: {
-            process_info: [
-              {
-                annotation: "",
-                finished_time: "2023-08-05 21:59:27",
-                user_name: "刘元东",
-                type: "提出",
-                isOpen: false,
-              },
-              {
-                annotation: "请落实是否有需要在此处增加护罩。",
-                finished_time: "2023-08-08 07:55:06",
-                user_name: "张宝川",
-                type: "转派",
-                isOpen: false,
-              },
-              {
-                annotation: "",
-                finished_time: "2023-11-01 14:39:56",
-                user_name: "武彦虎",
-                type: "接收",
-                isOpen: false,
-              },
-            ],
+          process_info: [
+            {
+              annotation: "",
+              finished_time: "2023-08-05 21:59:27",
+              user_name: "刘元东",
+              type: "提出",
+              isOpen: false,
+            },
+            {
+              annotation: "请落实是否有需要在此处增加护罩。",
+              finished_time: "2023-08-08 07:55:06",
+              user_name: "张宝川",
+              type: "转派",
+              isOpen: false,
+            },
+            {
+              annotation: "",
+              finished_time: "2023-11-01 14:39:56",
+              user_name: "武彦虎",
+              type: "接收",
+              isOpen: false,
+            },
+          ],
+        },
+        methods: {
+          openHandle(index) {
+            Object.assign(this.process_info[index], {
+              isOpen: !this.process_info[index].isOpen,
+            });
+            // let obj = {
+            //   ...this.process_info[index],
+            //   isOpen: !this.process_info[index].isOpen,
+            // };
+            // this.$set(this.process_info, index, obj);
           },
         },
       });
