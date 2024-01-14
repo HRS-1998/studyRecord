@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .content {
+        width: 820px;
+        height: 397px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .pic {
+        width: 100%;
+        height: 100%;
+        background: url(../images/imageF.jfif) no-repeat;
+        animation: filterMove 7s cubic-bezier(0.42, 0, 1, 1) 1s infinite running
+          forwards;
+      }
+      .text {
+        text-align: center;
+        color: white;
+        font-size: 18px;
+        letter-spacing: 5px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        animation: isshow 7s cubic-bezier(0.42, 0, 1, 1) 1s infinite running
+          forwards;
+        opacity: 0;
+      }
+      @keyframes filterMove {
+        10% {
+          filter: brightness(90%);
+        }
+        40% {
+          filter: brightness(60%);
+        }
+        80% {
+          filter: brightness(20%);
+        }
+        100% {
+          filter: brightness(0%);
+        }
+      }
+      @keyframes isshow {
+        0% {
+          opacity: 0;
+        }
+        40% {
+          opacity: 1;
+        }
+        80% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="content">
+      <div class="pic"></div>
+      <div class="text">
+        <p>如果生活中有什么使你感到快乐，那就去做吧</p>
+        <p>不要管别人说什么</p>
+      </div>
+    </div>
+  </body>
+</html>

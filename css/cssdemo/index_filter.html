@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      ul li {
+        list-style: none;
+      }
+      .cards {
+        height: 410px;
+        width: 1000px;
+        background-color: #65808c;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: space-around;
+      }
+      .card {
+        width: 266px;
+        height: 361px;
+        border-radius: 20px;
+        margin-top: 24.5px;
+        box-sizing: border-box;
+        padding: 15px;
+        position: relative;
+      }
+      .cards > .card::before {
+        z-index: -1;
+        content: "";
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        border-radius: 20px;
+        filter: blur(0px) opacity(1);
+        transition: filter 200ms linear, transform 200ms linear;
+      }
+      .cards > .card:nth-child(1)::before {
+        background: url(../images/fj01.jfif) no-repeat;
+        background-size: cover;
+      }
+      .cards > .card:nth-child(2)::before {
+        background: url(../images/fj02.jfif) no-repeat;
+        background-size: cover;
+      }
+      .cards > .card:nth-child(3)::before {
+        background: url(../images/fj04.jfif) no-repeat;
+        background-size: cover;
+      }
+      /*
+     这里不能将滤镜直接加在.card元素，而是将背景和滤镜都加在伪类上。
+     因为，父元素加了滤镜，它的子元素都会一起由该滤镜改变。
+     如果滤镜直接加在.card元素上，会导致上面的文字也变模糊。
+    */
+
+      /* //通过css选择器选出非hover的.card元素，给其伪类添加模糊、透明度和明暗度的滤镜  */
+      .cards:hover > .card:not(:hover)::before {
+        filter: blur(5px) opacity(0.8) brightness(0.8);
+      }
+      /* //对于hover的元素，其伪类增强饱和度，尺寸放大 */
+      .card:hover::before {
+        filter: saturate(1.5);
+        transform: scale(1.05);
+      }
+      .title {
+        color: white;
+        font-size: 28px;
+        /* text-decoration: ; */
+      }
+      .content {
+        color: white;
+        font-size: 16px;
+        text-align: start;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ul class="cards">
+      <li class="card">
+        <p class="title">Flower</p>
+        <p class="content">The flowers mingle to form a blaze of color.</p>
+      </li>
+      <li class="card">
+        <p class="title">Sunset</p>
+        <p class="content">The sunset glow tinted the sky red.</p>
+      </li>
+      <li class="card">
+        <p class="title">Plain</p>
+        <p class="content">
+          The winds came from the north, across the plains, funnelling down the
+          valley.
+        </p>
+      </li>
+    </ul>
+
+    <script></script>
+  </body>
+</html>
