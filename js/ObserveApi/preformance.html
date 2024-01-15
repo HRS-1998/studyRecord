@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="measureClick()">Measure</button>
+
+    <img
+      src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/679f1aa4184e4a0b93def4150d4e9516~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=140&h=140&s=4862&e=webp&b=0c6497"
+    />
+    <script>
+      // 创建一个 PerformanceObserver 对象，用于监测网页的性能数据
+      const performanceObserver = new PerformanceObserver((list) => {
+        // 遍历观察到的性能条目并将它们输出到控制台
+        list.getEntries().forEach((entry) => {
+          console.log(entry);
+        });
+      });
+
+      // 配置性能观察器，以监测 'resource'、'mark' 和 'measure' 类型的性能条目
+      performanceObserver.observe({
+        entryTypes: performanceObserver.supportedEntryTypes,
+        // entryTypes: [
+        //   "frame",
+        //   "navigation",
+        //   "resource",
+        //   "mark",
+        //   "measure",
+        //   "paint",
+        //   "first-contentful-paint",
+        // ],
+      });
+
+      // 创建一个名为 'registered-observer' 的性能标记（mark），以记录代码中的特定时间点
+      performance.mark("registered-observer");
+
+      // 定义一个名为 'measureClick' 的函数，该函数用于触发名为 'button clicked' 的性能测量（measure）
+      function measureClick() {
+        performance.measure("button clicked");
+      }
+    </script>
+  </body>
+</html>

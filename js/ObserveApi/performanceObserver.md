@@ -44,7 +44,7 @@ const callback = (entries) => {
 
 ==『buffered』== 一个布尔值，指示是否应该检查已缓冲的性能条目（默认 false），如果设置为 true，则性能观察器将检查在调用 observe 之前已经发生的性能条目
 
-==『transgerMode』== 一个字符串，用于指定如何传输性能条目，可以包含以下值：
+==『transferMode』== 一个字符串，用于指定如何传输性能条目，可以包含以下值：
 
 - "report"&ensp;默认值，性能条目将通过回调函数进行报告
 - "accumulate"&ensp; 性能条目将积累并传递给回调函数

@@ -5,14 +5,24 @@
     "version": "0.2.0",
     "configurations": [
         
+        // {
+        //     "type": "node",
+        //     "request": "launch",
+        //     "name": "启动程序",
+        //     "skipFiles": [
+        //         "<node_internals>/**"
+        //     ],
+        //     "program": "${workspaceFolder}\\nextdaytest\\index4.js",
+        //     "file":"${workspaceFolder}/日常细节/002_copyclipboard/demo1.html"
+        // },
         {
-            "type": "node",
+            "name": "Launch Edge",
             "request": "launch",
-            "name": "启动程序",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}\\nextdaytest\\index4.js"
+            "type": "msedge",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}",
+            "file": "${workspaceFolder}/detail/002__copyclipboard/demo1.html",
+            "sourceMaps": true
         }
     ]
 }
