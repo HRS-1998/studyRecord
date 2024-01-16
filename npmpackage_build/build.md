@@ -69,3 +69,5 @@ seajs.use(["myModule.js"], function (my) {});
 2、CMD 推崇就近依赖，只有在用到某个模块的时候再去 require 这种区别各有优劣，只是语法上的差距，而且 requireJS 和 SeaJS 都支持对方的写法；
 
 3、AMD 和 CMD 最大的区别是对依赖模块的执行时机处理不同，注意不是加载的时机或者方式不同。
+
+

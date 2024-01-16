@@ -1,0 +1,19 @@
+{
+  "name": "hours_suportall",
+  "version": "1.0.0",
+  "description": "'一个支持ts,cjs,esm,browser的package'",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports":{
+    "import":"./index.mjs",
+    "default":"./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hours",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
