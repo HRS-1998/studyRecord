@@ -189,7 +189,7 @@ _==types&ensp; unpkg&ensp; jsdeliver&ensp; browserslist&ensp; sideEffects&ensp; 
 {
 //types或typings 指定Ts的类型定义的入口文件
 types:"./index.d.ts",
-//让npm上所有的文件都开启CDN服务，例如vue package.json中unpkg定义为dist/vue.global.js,当我们通过CDN方式使用链接引入vue时，回重定向至Vue最新版本
+//让npm上所有的文件都开启CDN服务，例如vue package.json中unpkg定义为dist/vue.global.js,当我们通过CDN方式使用链接引入vue时，会重定向至Vue最新版本
 unpkg:"dist/vue.global.js"
 }
 //类似于unpkg
@@ -197,8 +197,7 @@ jsdeliver:"dist/vue.global.js",
 //设置项目的浏览器兼容情况。babel 和 autoprefixer 等工具会使用该配置对代码进行转换。当然你也可以使用 .browserslistrc 单文件配置
 browserslist:[">1%","last 2 versions"]
 // 显示设置某些模块具有副作用，用于 webpack 的 tree-shaking 优化。比如在项目中整体引入 Ant Design 组件库的 css 文件。如果 Ant Design 的 package.json 里不设置 sideEffects，那么 webapck 构建打包时会认为这段代码只是引入了但并没有使用，可以 tree-shaking 剔除掉，最终导致产物缺少样式。所以 Ant Design 在 package.json 里设置了如下的 sideEffects，来告知 webpack，这些文件具有副作用，引入后不能被删除。
- sideEffects: ["dist/*", "es/**/style/*", "lib/**/style/*", "*.less"
-]
+sideEffects: ["dist/*", "es/**/style/*", "lib/**/style/*", "*.less"]
 // /lint-staged 是用于对 git 的暂存区的文件进行操作的工具，比如可以在代码提交前执行 lint 校验，类型检查，图片优化等操作。lint-staged 通常配合 husky 这样的 git-hooks 工具一起使用。git-hooks 用来定义一个钩子，这些钩子方法会在 git 工作流程中比如 pre-commit，commit-msg 时触发，可以把 lint-staged 放到这些钩子方法中。
 "lint-staged": {
   "src/**/*.{js,jsx,ts,tsx}": [
@@ -207,3 +206,8 @@ browserslist:[">1%","last 2 versions"]
   ]
 }
 ```
+
+有时我们修改 node_modules 下的一些代码，但是 node_modules 不会提交到 git 这时候可以用 ==patch-package== 这个工具
+例如：修改了 node_module 下的 ant_design 加了个 a.js 文件，可以在项目目录下执行 npx patch-package ant_design,就
+会生成一个 patches 目录里面的 xxx.patch 记录着对这个包的改动，这个是会提交到 git 仓库中的后面拉下代码是 执行
+npx patch-package 就会应用此次改动或者可以配置到 postinstall 中每次安装完依赖自动执行

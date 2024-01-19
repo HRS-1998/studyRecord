@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "glob": "^10.3.10",
-    "hours_test": "^1.0.3"
+    "hours_test": "^1.0.3",
+    "patch-package": "^8.0.0"
   }
 }
