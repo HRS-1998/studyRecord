@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @keyframes roll {
+            0% {
+                transform: translateX(50vw);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .scrollBox {
+            width: 50vw;
+            height: 60px;
+            line-height: 60px;
+            border: 1px solid black;
+            color: #00c7ff;
+            overflow: hidden;
+        }
+
+        .scrollContent {
+            white-space: nowrap;
+            width: max-content;
+            animation: roll 5s linear .5s infinite normal running both;
+        }
+
+        .scrollContent:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scrollBox">
+        <div class="scrollContent">的啦放假啊了放假啊防腐剂垃圾发发减肥来得及啊高级工爱国放大发放</div>
+    </div>
+</body>
+
+</html>

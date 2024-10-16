@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="UTF-8" />
+   <title>导出图片和数据到Excel</title>
+ </head>
+ <body>
+   <div id="app">点击</div>
+ </body>
+ <script src="./excel.js"></script>
+ <script>
+   // tHeader和tbody的数据需要一一对应
+   let tHeader = ["车名", "颜色", "照片"];
+   let tbody = [
+     {
+       name: "林肯",
+       color: "红色",
+       pic: "https://img2.baidu.com/it/u=4020335929,583313623&fm=253&fmt=auto&app=138&f=JPEG?w=512&h=384",
+     },
+     {
+       name: "林肯",
+       color: "黄色",
+       pic: "https://img1.baidu.com/it/u=1453715177,1769663341&fm=253&fmt=auto&app=120&f=JPEG?w=750&h=500",
+     },
+     {
+       name: "林肯",
+       color: "紫色",
+       pic: "https://img1.baidu.com/it/u=1453715177,1769663341&fm=253&fmt=auto&app=120&f=JPEG?w=750&h=500",
+     },
+     {
+       name: "林肯",
+       color: "白色",
+       pic: "https://img2.baidu.com/it/u=647676637,3137806543&fm=253&fmt=auto&app=120&f=JPEG?w=889&h=500",
+     },
+     {
+       name: "林肯",
+       color: "粉色",
+       pic: "https://img0.baidu.com/it/u=2950100227,2008423144&fm=253&fmt=auto&app=120&f=JPEG?w=830&h=467",
+     },
+   ];
+   const export2Excel = (theadData, tbodyData, dataname) => {
+     let re = /http/; // 字符串中包含http,则默认为图片地址
+     let th_len = theadData.length; // 表头的长度
+     let tb_len = tbodyData.length; // 记录条数
+     let width = 120; // 设置图片大小
+     let height = 80;
+
+     // 添加表头信息
+     let thead = "<thead><tr>";
+     for (let i = 0; i < th_len; i++) {
+       thead += "<th>" + theadData[i] + "</th>";
+     }
+     thead += "</tr></thead>";
+
+     // 添加每一行数据
+     let tbody = "<tbody>";
+     for (let i = 0; i < tb_len; i++) {
+       tbody += "<tr>";
+       let row = tbodyData[i]; // 获取每一行数据
+
+       for (let key in row) {
+         if (re.test(row[key])) {
+           // 如果为图片，则需要加div包住图片
+           //
+           tbody +=
+             '<td style="width:' +
+             width +
+             "px; height:" +
+             height +
+             'px; text-align: center; vertical-align: middle"><div style="display:inline"><img src=\'' +
+             row[key] +
+             "' " +
+             " " +
+             "width=" +
+             '"' +
+             width +
+             '"' +
+             " " +
+             "height=" +
+             '"' +
+             height +
+             '"' +
+             "></div></td>";
+         } else {
+           tbody += '<td style="text-align:center">' + row[key] + "</td>";
+         }
+       }
+       tbody += "</tr>";
+     }
+     tbody += "</tbody>";
+
+     let table = thead + tbody;
+
+     // 导出表格
+     exportToExcel(table, dataname);
+   };
+   //
+   const app = document.querySelector("#app");
+   app.onclick = function () {
+     export2Excel(tHeader, tbody, '测试数据')
+   }; //
+ </script>
+</html>
+
+

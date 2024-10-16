@@ -1,0 +1,23 @@
+{
+  "name": "hours",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build_swc": "node swc/swc.js ",
+    "start": "node test"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "hours",
+  "license": "ISC",
+  "devDependencies": {
+    "@swc/core": "^1.3.103"
+  },
+  "dependencies": {
+    "glob": "^10.3.10",
+    "hours_test": "^1.0.3",
+    "patch-package": "^8.0.0"
+  }
+}
