@@ -12,14 +12,14 @@
 //   console.log(add(0.1, 0.2)); // 0.3
 
 // //随机生成一个字符串
-// radom = (n) => {
-//     let i = Math.random()
-//     let b = i.toString(36)
-//     console.log(b) 
-//     let c=b.slice(2,n+2)
-//     console.log(c);
+radom = (n) => {
+    let i = Math.random()
+    let b = i.toString(36)
+    console.log(i, b)
+    let c = b.slice(2, n + 2)
+    console.log(c);
 
-// }
-// radom(5)
+}
+radom(5)
 
 

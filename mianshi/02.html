@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <style>
+      /* 先画一个圆,外加两个绝对定位的半圆
+扇形可以通过两个半圆作为遮罩旋转来露出相应的角度实现
+这只能切出180°以内的扇形
+超过180°的扇形,就把圆作为底色,两个遮罩作为扇形的组成部分
+
+不知道描述的好不好理解,但确实能实现任意角度的扇形了 */
+
+      .contain {
+        position: relative;
+        width: 200px;
+        height: 200px;
+      }
+      .main {
+        height: 100%;
+        background: lightgreen;
+        border-radius: 100px;
+      }
+      .common {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+      }
+      .mask1 {
+        transform: rotate(83deg);
+        border-radius: 100px 0 0 100px;
+        left: 0;
+        transform-origin: right center;
+        background: red;
+      }
+      .mask2 {  76deg); 
+        transform-origin: left center;
+        left: 100px;  100px 0;
+        background: blue;
+      }
+    </style> -->
+    <style>
+      .angle {
+        width: 0;
+        height: 0;
+        border: 10px solid transparent;
+        /* border-bottom: 10px solid red; */
+        border-left: 10px solid red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- <div class="contain">
+      <div class="main"></div>
+      <div class="mask1 common"></div>
+      <div class="mask2 common"></div>
+    </div> -->
+    <div class="angle"></div>
+  </body>
+</html>

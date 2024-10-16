@@ -1,0 +1,54 @@
+<!-- 请你使⽤HTML & CSS书写⼀段样式，实现以下布局&效果（请给出实现思路和具体代码）：
+1. ⽗元素宽度百分⽐，⾼度⾃适应，上下内边距20px，内部有三个⼦元素，三个⼦元素呈横向
+排列，每个⼦元素宽度为⽗元素宽度的25%，⼦元素为正⽅形，背景颜⾊为从红⾊到橙⾊的
+直线渐变⾊，三个⼦元素之间的外边距为⽗元素宽度的5%，所有⼦元素居中排列
+2. 给三个⼦元素添加渐⼊动画，从完全透明到完全显示，要求第⼀个元素在1s后渐显，第⼆个
+元素在2s后渐显，第三个元素在3s后渐显，所有动画持续0.5s，整个过程中，元素位置不能
+发⽣变动 -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .parent {
+        width: 80%; /* 假设父元素宽度为容器宽度的80% */
+        padding: 20px 0; /* 上下内边距20px，左右为0 */
+        display: flex; /* 使用Flexbox布局使子元素横向排列 */
+        justify-content: space-between; /* 子元素之间间隔相等，且两端对齐 */
+        margin: 0 auto; /* 父元素居中显示 */
+      }
+
+      .child {
+        width: 25%; /* 子元素宽度为父元素宽度的25% */
+        height: 0; /* 子元素高度为0，由padding-top实现 */
+        padding-top: 25%; /* 正方形高度通过padding-top实现，与宽度相同 */
+        background: linear-gradient(
+          to right,
+          red,
+          orange
+        ); /* 红色到橙色的渐变背景 */
+        margin: 0 5%; /* 子元素之间的外边距为父元素宽度的5%，除以4是因为有4个子元素间隔 */
+        animation: fadeIn 0.5s forwards; /* 应用渐入动画 */
+        animation-delay: var(--delay); /* 使用CSS变量设置动画延迟 */
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        } /* 动画开始时完全透明 */
+        to {
+          opacity: 1;
+        } /* 动画结束时完全不透明 */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="parent">
+      <div class="child" style="--delay: 1s"></div>
+      <div class="child" style="--delay: 2s"></div>
+      <div class="child" style="--delay: 3s"></div>
+    </div>
+  </body>
+</html>

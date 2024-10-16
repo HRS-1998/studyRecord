@@ -51,7 +51,7 @@ let callback = (entries, observer) => {
 - target 被观察的目标元素
 - rootBounds root 元素的矩形区域信息，和 getBoundingClientRect()方法返回值一致
 - boundingClientRect 目标元素矩形区域信息
-- intersectionRect 目标元素与视口交叉区域信息
+- intersect i onRect 目标元素与视口交叉区域信息
 - intersectionRatio 目标元素的可见比例，即目标元素占 root 元素矩形区域的比值
 - isIntersecting 是否发生相交，true 相交，false 不相交
 
